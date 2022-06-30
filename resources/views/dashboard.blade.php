@@ -15,7 +15,6 @@
             {{$post->user->email}} <span>{{$post->created_at->format('d M')}}</span>
           </h3>
         </div>
-
         <div class="text-md text-gray-600 font-semibold text-justify sm:text-left">
           <h1 class="font-bold text-xl ">{{$post->title}}</h1>
           <p>

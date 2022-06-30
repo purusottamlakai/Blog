@@ -23,6 +23,38 @@
                  {{$post->body}}
               </p>
            </div>
+           <form action="{{route('rating.store',['post_id'=>$post->id])}}" action="POST">
+            <div class="block max-w-3xl px-1 py-2 mx-auto">
+                <div class="flex space-x-1 rating">
+                    <label for="star1">
+                        <input  type="radio" id="star1" name="stars_rated" value="1"/>
+                        <svg class="cursor-pointer block w-8 h-8" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg>
+                    </label>
+                    <label for="star2">
+                        <input  type="radio" id="star2" name="stars_rated" value="2" />
+                        <svg class="cursor-pointer block w-8 h-8 " fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg>
+                    </label>
+                    <label for="star3">
+                        <input  type="radio" id="star3" name="stars_rated" value="3" />
+                        <svg class="cursor-pointer block w-8 h-8 " fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg>
+                    </label>
+                    <label for="star4">
+                        <input  type="radio" id="star4" name="stars_rated" value="4" />
+                        <svg class="cursor-pointer block w-8 h-8 " fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg>
+                    </label>
+                    <label for="star5">
+                        <input  type="radio" id="star5" name="stars_rated" value="5" />
+                        <svg class="cursor-pointer block w-8 h-8 " fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg>
+                    </label>
+                  </div>
+            </div>
+            <div class="block">
+               @error('stars_rated')
+                    <div class="text-red-600 text-md">{{ $message }}</div>
+               @enderror
+                <button type="submit" class="px-2 py-4 font-bold underline text-xl">Rate us</button>
+            </div>
+        </form>
            <div class="max-w-lg">
               <form action="{{route('comment.store',['post_id'=>$post->id])}}" method="POST" class="w-full p-4">
                 @csrf
