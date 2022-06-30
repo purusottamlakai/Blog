@@ -16,7 +16,7 @@ class Post extends Model
         'body',
         'user_id',
     ];
-
+    protected $with=['ratings'];
     public function user()
     {
         return $this->belongsTo(User::class);

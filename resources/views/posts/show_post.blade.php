@@ -52,6 +52,11 @@
                @error('stars_rated')
                     <div class="text-red-600 text-md">{{ $message }}</div>
                @enderror
+               @if (Session::has('rating'))
+               <div class=" text-red-600 text-md px-4 py-3" role="alert">
+                  <p>your Rating is {{Session('rating')}}</p>
+               </div>
+                @endif
                 <button type="submit" class="px-2 py-4 font-bold underline text-xl">Rate us</button>
             </div>
         </form>

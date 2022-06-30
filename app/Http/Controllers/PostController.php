@@ -24,6 +24,7 @@ class PostController extends Controller
     {   
         $this->PostRepository->setCount($id);
         $data['post']=$this->PostRepository->showSinglePost($id);
+        $data['authUser']=Auth::id();
         return view('posts.show_post',$data);
     }
     public function store(PostRequest $request)

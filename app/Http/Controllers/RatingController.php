@@ -19,13 +19,13 @@ class RatingController extends Controller
         $validated=$request->validated();
         $user= Auth::id();
         if(Rating::where('user_id',$user)->where('post_id',$post_id)->exists()){
-            $this->ratingRepository->update($user,$post_id,$validated);
-            return back()->with('status','Your rating is updated.');
+            $rating=$this->ratingRepository->update($user,$post_id,$validated);
+            return back()->with(['status'=>'Your rating is updated.','rating'=>$rating]);
         }
         else
         {
-        $this->ratingRepository->store($user,$post_id,$validated);
-        return back()->with('status','Thank you for your rating');
+        $rating=$this->ratingRepository->store($user,$post_id,$validated);
+        return back()->with(['status'=>'Thank you for your rating','rating'=>$rating]);
         }
     }
 }

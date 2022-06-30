@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Interfaces\PostRepositoryInterface;
+use App\Models\Rating;
 use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller

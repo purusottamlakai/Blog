@@ -16,12 +16,14 @@ class RatingRepository implements RatingRepositoryInterface
         $rating->post_id=$post_id;
         $rating->user_id=$user;
         $rating->save();
+        return $rating->stars_rated;
+
     }
     public function update($user,$post_id,$validated)
     {
         $rating=Rating::where('user_id',$user)->where('post_id',$post_id)->first();
         $rating->stars_rated=$validated['stars_rated'];
         $rating->update();
-        
+        return $rating->stars_rated;
     }
 }
