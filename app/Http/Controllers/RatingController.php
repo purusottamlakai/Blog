@@ -3,26 +3,28 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\RatingRequest;
+use App\Interfaces\RatingRepositoryInterface;
 use App\Models\Rating;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class RatingController extends Controller
 {
+    public function __construct(private RatingRepositoryInterface $ratingRepository)
+    {
+        
+    }
     public function store(RatingRequest $request,$post_id)
     {
         $validated=$request->validated();
         $user= Auth::id();
         if(Rating::where('user_id',$user)->where('post_id',$post_id)->exists()){
-            return back()->with('status','Already rated.');
+            $this->ratingRepository->update($user,$post_id,$validated);
+            return back()->with('status','Your rating is updated.');
         }
         else
         {
-        $rating=new Rating();
-        $rating->stars_rated=$validated['stars_rated'];
-        $rating->post_id=$post_id;
-        $rating->user_id=$user;
-        $rating->save();
+        $this->ratingRepository->store($user,$post_id,$validated);
         return back()->with('status','Thank you for your rating');
         }
     }
