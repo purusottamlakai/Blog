@@ -37,7 +37,7 @@ class CommentController extends Controller
     public function update(UpdateComment $request,$post_id,$id)
     {   
         $this->CommentRepository->updateComment($request,$id);
-        return back()->with('status','Successfully Edited');
+        return redirect()->route('comment.show',['post_id'=>$post_id])->with('status','Successfully Edited');
     }
     public function delete($post_id,$id)
     {   

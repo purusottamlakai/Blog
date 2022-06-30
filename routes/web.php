@@ -15,7 +15,7 @@ Route::group(['middleware'=>['auth']],function(){
     Route::post('/post/add',[PostController::class,'store'])->name('post.store');
     Route::get('/posts/{post_id}',[PostController::class,'show'])->name('post.show');
     Route::get('/posts/{post_id}/edit',[PostController::class,'edit'])->name('post.edit');
-    Route::put('/posts/{post_id}/update',[PostController::class,'update'])->name('post.update');
+    Route::put('/posts/{post_id}/',[PostController::class,'update'])->name('post.update');
     Route::get('/posts/{post_id}/delete',[PostController::class,'delete'])->name('post.delete');
    
     /* Rating's Routes */
@@ -24,7 +24,7 @@ Route::group(['middleware'=>['auth']],function(){
      Route::post('/posts/{post_id}/comments/store',[CommentController::class,'store'])->name('comment.store');
      Route::get('/posts/{post_id}/comments',[CommentController::class,'show'])->name('comment.show');
      Route::get('/posts/{post_id}/comments/{id}/edit',[CommentController::class,'edit'])->name('comment.edit');
-     Route::put('/posts/{post_id}/comments/{id}/update',[CommentController::class,'update'])->name('comment.update');
+     Route::put('/posts/{post_id}/comments/{id}',[CommentController::class,'update'])->name('comment.update');
      Route::get('/posts/{post_id}/comments/{id}/delete',[CommentController::class,'delete'])->name('comment.delete');
 
 

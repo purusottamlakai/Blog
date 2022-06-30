@@ -14,7 +14,7 @@ class PostRepository implements PostRepositoryInterface
     }
     public function getAllPosts() 
     {
-        return $this->postModel->cursorPaginate(4);
+        return $this->postModel->latest()->cursorPaginate(4);
     }
     public function setCount($id)
     {   
