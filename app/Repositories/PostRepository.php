@@ -8,9 +8,22 @@ use Illuminate\Support\Facades\Auth;
 
 class PostRepository implements PostRepositoryInterface
 {
+    public function __construct(protected Post $postModel)
+    {
+        
+    }
     public function getAllPosts() 
     {
-        return Post::cursorPaginate(6);
+        return $this->postModel->cursorPaginate(4);
+    }
+    public function setCount($id)
+    {   
+        $post=$this->postModel->where('id', $id)
+        ->increment('counts', 1);
+    }
+    public function showSinglePost($id)
+    {
+        return $this->postModel->find($id);
     }
     public function storePost($request) 
     {
@@ -33,5 +46,10 @@ class PostRepository implements PostRepositoryInterface
         $post->title=$validated['title'];
         $post->body=$validated['body'];
         $post->save(); 
+    }
+    public function deletePost($post_id)
+    {
+        return Post::find($post_id)->delete();
+
     }
 }

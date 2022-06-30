@@ -9,14 +9,22 @@ use Illuminate\Auth\Events\Validated;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Interfaces\PostRepositoryInterface;
+use App\Models\Comment;
 
 class PostController extends Controller
 {
-    private PostRepositoryInterface $PostRepository;
-
-    public function __construct(PostRepositoryInterface $PostRepository) 
+    public function __construct(private PostRepositoryInterface $PostRepository) 
     {
-        $this->PostRepository = $PostRepository;
+    }
+    public function index()
+    {
+        return view('posts.add_post');
+    }
+    public function show($id)
+    {   
+        $this->PostRepository->setCount($id);
+        $data['post']=$this->PostRepository->showSinglePost($id);
+        return view('posts.show_post',$data);
     }
     public function store(PostRequest $request)
     {
@@ -34,4 +42,10 @@ class PostController extends Controller
         return redirect()->route('dashboard')->with('status','Successfully Updated.');
              
     }
+    public function delete($post_id)
+    {   
+        $this->PostRepository->deletePost($post_id);
+        return back()->with('status','Post is deleted.');
+    }
+    
 }

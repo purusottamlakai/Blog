@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Interfaces\PostRepositoryInterface;
-
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -17,6 +17,8 @@ class HomeController extends Controller
     public function show()
     {
         $data['posts']=$this->PostRepository->getAllPosts();
+        $data['authUser']=Auth::id();
         return view('dashboard',$data);    
     }
+    
 }
