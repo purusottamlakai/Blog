@@ -12,31 +12,21 @@ class CommentRepository implements CommentRepositoryInterface
     {
         
     }
-    public function storeComment($request,$post_id)
+    public function storeComment($request,$post)
     {
         $validated=$request->validated();
         $comment=new Comment;
         $comment->body=$validated['body'];
         $comment->user_id=Auth::user()->id;
-        $comment->post_id=$post_id;
+        $comment->post_id=$post->id;
         $comment->save();
     }
-    public function showComment($post_id)
-    {
-        return $this->comment->where('post_id','=',$post_id)->latest()->cursorPaginate(4);
-    } 
-    public function editComment($id)
-    {
-        return Comment::find($id);
-    } 
-    public function updateComment($request,$id)
+    public function updateComment($request,$comment)
     {
         $validated=$request->validated();
-        $comment=Comment::find($id);
         $comment->body=$validated['body'];
-        $comment->user_id=Auth::id();
-        $comment->post_id=$comment->post_id;
-        $comment->save();   
+        $comment->update();
+        return $comment->post;
     } 
     public function deleteComment($id)
     {

@@ -16,7 +16,7 @@
                    </div>
                </div>
                <div class="px-2">
-                  <form action="{{route('comment.update',['post_id'=>$comment->post_id,'id'=>$comment->id])}}" method="post">
+                  <form action="{{route('comment.update',['post'=>$comment->post_id,'comment'=>$comment->id])}}" method="post">
                     @csrf
                      @method('put')
                      <label for="comment">Edit Your Comment</label>

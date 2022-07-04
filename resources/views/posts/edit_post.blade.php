@@ -2,7 +2,7 @@
     <div class="flex items-center justify-center p-12">
        <div class="mx-auto w-full max-w-[550px]">
         <h5 class="mt-3 text-center text-2xl font-extrabold text-gray-900">Update Post</h5>
-          <form action="{{route('post.update',['post_id'=>$post->id])}}" method="POST">
+          <form action="{{route('post.update',['post'=>$post->id])}}" method="POST">
               @csrf
               @method('PUT')
              <div class="mb-5">

@@ -12,36 +12,28 @@ use Illuminate\Support\Facades\Auth;
 
 class CommentController extends Controller
 {
-    private CommentRepositoryInterface $CommentRepository;
-
-    public function __construct(CommentRepositoryInterface $CommentRepository) 
+    public function __construct(private CommentRepositoryInterface $commentRepository) 
     {
-        $this->CommentRepository = $CommentRepository;
     }
-    public function store(StoreComment $request,$post_id)
+    public function store(StoreComment $request,Post $post)
     {
-         $this->CommentRepository->storeComment($request,$post_id);
+         $this->commentRepository->storeComment($request,$post);
          return redirect()->back()->with('status','New Comment Added.'); 
     }
-    public function show($post_id)
-    {   
-        $data['comments']=$this->CommentRepository->showComment($post_id);
-        $data['authUser']=Auth::id();
-        return view('comments.show_comments',$data);
+  
+    public function edit($post,Comment $comment)
+    {  
+        $data['comment']=$comment;
+        return view('comments.edit_comment',$data);
     }
-    public function edit($post_id,$id)
-    {   
-        $comment=$this->CommentRepository->editComment($id);
-        return view('comments.edit_comment',compact('comment'));
-    }
-    public function update(UpdateComment $request,$post_id,$id)
-    {   
-        $this->CommentRepository->updateComment($request,$id);
-        return redirect()->route('comment.show',['post_id'=>$post_id])->with('status','Successfully Edited');
+    public function update(UpdateComment $request,$post, Comment $comment)
+    {
+        $data['post']=$this->commentRepository->updateComment($request,$comment);
+        return redirect()->route('post.show',$data)->with('status','Successfully Edited');
     }
     public function delete($post_id,$id)
     {   
-        $this->CommentRepository->deleteComment($id);
+        $this->commentRepository->deleteComment($id);
         return back()->with('status','Successfully Deleted');
     }
 

@@ -23,7 +23,7 @@
                  {{$post->body}}
               </p>
            </div>
-           <form action="{{route('rating.store',['post_id'=>$post->id])}}" action="POST">
+           <form action="{{route('rating.store',['post'=>$post->id])}}" action="POST">
             <div class="block max-w-3xl px-1 py-2 mx-auto">
                 <div class="flex space-x-1 rating">
                     <label for="star1">
@@ -59,9 +59,9 @@
                 @endif
                 <button type="submit" class="px-2 py-4 font-bold underline text-xl">Rate us</button>
             </div>
-        </form>
+          </form>
            <div class="max-w-lg">
-              <form action="{{route('comment.store',['post_id'=>$post->id])}}" method="POST" class="w-full p-4">
+              <form action="{{route('comment.store',['post'=>$post->id])}}" method="POST" class="w-full p-4">
                 @csrf
                  <div class="mb-2">
                     <label for="comment" class="text-lg ">Add a comment</label>
@@ -74,8 +74,8 @@
                  <button class="px-3 py-2 text-md underline">submit</button>
               </form>    
             </div>
-            <a class="justify-center underline" href="{{route('comment.show',['post_id'=>$post->id])}}">view comments</a>
-        </div>
+            @include('comments.show_comments',['authUser'=>$authUser,'posts'=>$post])
+         </div>
      </div>
   </div>
   </div>

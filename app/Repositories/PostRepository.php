@@ -21,10 +21,6 @@ class PostRepository implements PostRepositoryInterface
         $post=$this->postModel->where('id', $id)
         ->increment('counts', 1);
     }
-    public function showSinglePost($id)
-    {
-        return $this->postModel->find($id);
-    }
     public function storePost($request) 
     {
         $validated=$request->validated();
@@ -46,10 +42,5 @@ class PostRepository implements PostRepositoryInterface
         $post->title=$validated['title'];
         $post->body=$validated['body'];
         $post->save(); 
-    }
-    public function deletePost($post_id)
-    {
-        return Post::find($post_id)->delete();
-
     }
 }
