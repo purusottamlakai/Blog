@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\RatingController;
@@ -18,7 +19,7 @@ Route::group(['middleware'=>['auth']],function(){
     Route::get('/posts/{post}',[PostController::class,'show'])->name('post.show');
     Route::get('/posts/{post}/edit',[PostController::class,'edit'])->name('post.edit');
     Route::put('/posts/{post}',[PostController::class,'update'])->name('post.update');
-    Route::delete('/posts/{post}',[PostController::class,'destroy'])->name('post.delete');
+    Route::get('/posts/{post}/delete',[PostController::class,'destroy'])->name('post.delete');
    
     /* Rating's Routes */
     Route::get('/posts/{post}/rating',[RatingController::class,'store'])->name('rating.store');
@@ -27,6 +28,11 @@ Route::group(['middleware'=>['auth']],function(){
      Route::get('/posts/{post}/comments/{comment}/edit',[CommentController::class,'edit'])->name('comment.edit');
      Route::put('/posts/{post}/comments/{comment}',[CommentController::class,'update'])->name('comment.update');
      Route::get('/posts/{post}/comments/{comment}/delete',[CommentController::class,'delete'])->name('comment.delete');
+     /* Category's Routes */
+     Route::get('/categories',[CategoryController::class,'index'])->name('category.index');
+     Route::get('/categories/{category}/posts',[CategoryController::class,'showPosts'])->name('category.post');
+
+
 
 
 

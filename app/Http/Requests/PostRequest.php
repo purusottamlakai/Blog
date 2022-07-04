@@ -30,7 +30,8 @@ class PostRequest extends FormRequest
     {
         return [
             'title'=>'required|max:20|min:3',
-            'body'=>'required|max:255|min:10|unique:posts,body',
+            'body'=>'required|max:255|min:10',
+            'category_id'=>'required',
         ];
     }
 }

@@ -14,7 +14,8 @@ class Post extends Model
     protected $fillable = [
         'title',
         'body',
-        'user_id',
+        'category_id',
+
     ];
     protected $with=['ratings'];
     public function user()
@@ -28,5 +29,9 @@ class Post extends Model
     public function ratings()
     {
         return $this->hasMany(Rating::class,'post_id','id');
+    }
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
     }
 }

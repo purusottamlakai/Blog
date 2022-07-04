@@ -27,6 +27,7 @@ class PostRepository implements PostRepositoryInterface
         $post=new Post;
         $post->title=$validated['title'];
         $post->body=$validated['body'];
+        $post->category_id=$validated['category_id'];
         $post->user()->associate(Auth::user());
         $post->save();
     }
@@ -41,6 +42,7 @@ class PostRepository implements PostRepositoryInterface
         $post=Post::find($id);
         $post->title=$validated['title'];
         $post->body=$validated['body'];
+        $post->category_id=$validated['category_id'];
         $post->save(); 
     }
 }

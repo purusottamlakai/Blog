@@ -11,18 +11,23 @@
   <div class="py-2 px-4 flex flex-col mb-2 max-w-md">
      <div class="bg-white rounded-lg w-1/2 justify-center sm:justify-start items-center sm:items-start sm:flex-row space-x-2 p-8  ">
         <div class="px-4">
-           <div class="top-section flex mb-5 flex-col sm:flex-row  space-x-6 text-center sm:text-left">
-              <h2 class="font-bold text-2xl text-black pt-2 ">{{$post->user->name}}</h2>
-              <h3 class="text-sm font-bold">
-                 {{$post->user->email}} <span class="text-red-600">{{$post->created_at->format('d M')}}</span>
-              </h3>
-           </div>
-           <div class="mb-5 text-md text-gray-600 font-semibold text-justify sm:text-left">
-              <h1 class="font-bold text-xl py-2">{{$post->title}}</h1>
-              <p class="text-sm">
-                 {{$post->body}}
-              </p>
-           </div>
+         <div class="top-section flex flex-col sm:flex-row  space-x-6 text-center sm:text-left">
+            <h2 class="text-md pt-2" style="color: rgb(29 78 216);">{{$post->user->name}}</h2>
+            <h3 class="text-gray-400">
+              {{$post->user->email}} <span>{{$post->created_at->format('d M')}}</span>
+            </h3>
+          </div>
+          <div class="text-justify sm:text-left text-gray-600 text-md">
+            <p>#{{$post->category->name}}</p>
+          </div>
+          <div class="text-justify sm:text-left">
+            <div class="pb-3">
+              <h1 class="font-normal text-xl" style="color: rgb(236 72 153);">{{$post->title}}</h1>
+            </div>
+            <p class="font-light text-gray-600">
+              {{$post->body}}
+            </p>
+          </div>
            <form action="{{route('rating.store',['post'=>$post->id])}}" action="POST">
             <div class="block max-w-3xl px-1 py-2 mx-auto">
                 <div class="flex space-x-1 rating">

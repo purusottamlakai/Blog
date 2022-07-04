@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\PostRequest;
 use App\Interfaces\PostRepositoryInterface;
+use App\Models\Category;
 use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -32,7 +33,8 @@ class PostController extends Controller
      */
     public function create()
     {
-        return view('posts.add_post');    
+        $data['categories']=Category::all();
+        return view('posts.add_post',$data);    
     }
 
     /**
@@ -70,6 +72,7 @@ class PostController extends Controller
     public function edit($id)
     {
         $data['post']=$this->postRepository->editPost($id);
+        $data['categories']=Category::all();
         return view('posts.edit_post',$data);
     }
 
