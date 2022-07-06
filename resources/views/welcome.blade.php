@@ -35,21 +35,24 @@
                     @endauth
                 </div>
             @endif
-
-            <div class="max-w-6xl mx-auto sm:px-6 lg:px-8">
+            <!-- component -->
+            
+            <div class="max-w-6xl mx-auto sm:px-6 lg:px-8  mt-4">
                 <div class="mt-8 bg-white dark:bg-gray-800 overflow-hidden shadow sm:rounded-lg">
                     <div class="grid grid-cols-1 md:grid-cols-1">
                         @foreach($posts as $post)
-                        <div class="p-6">
+                        <div class="p-6 shadow">
+                            <span class="ml-4">{{$post->user->name}}  | {{$post->updated_at->format('d M')}}</span>
                             <div class="flex items-center">
-                                <div class="ml-4 text-lg leading-7 font-semibold"><a href="https://laravel.com/docs" class="underline text-gray-900 dark:text-white">{{$post->title}}</a></div>
+                                <div class="ml-4 text-lg leading-7 font-semibold">{{$post->title}}</div>
                             </div>
 
-                            <div class="ml-12">
+                            <div class="ml-4">
                                 <div class="mt-2 text-gray-600 dark:text-gray-400 text-sm">
                                     {{$post->body}}
                                 </div>
                             </div>
+                            <span class="ml-4" style="color: darkgoldenrod">Rating:{{round($post->ratings->average('stars_rated'),2) ?? '0'}}</span>
                         </div>
                         @endforeach
                     </div>
