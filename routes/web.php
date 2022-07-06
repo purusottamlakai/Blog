@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\PostController;
@@ -9,7 +10,8 @@ use App\Models\Post;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function(){
-return view('welcome');
+$data['posts']=Post::paginate(8);
+return view('welcome',$data);
 });
 Route::group(['middleware'=>['auth']],function(){
     /* Post's Routes */
@@ -33,9 +35,19 @@ Route::group(['middleware'=>['auth']],function(){
      Route::get('/categories/{category}/posts',[CategoryController::class,'showPosts'])->name('category.post');
 
 
-
-
-
 });
 
+/*  Admin Routes*/
+Route::group(['prefix' => 'admin', 'middleware' => ['admin']],function(){
+    Route::get('/dashboard',[AdminController::class,'showDashbord'])->name('admin.dashboard');
+    Route::get('/posts',[AdminController::class,'showPosts'])->name('admin.post');
+    Route::get('/users/{user}/delete',[AdminController::class,'deleteUser'])->name('user.delete');
+    Route::get('/categories',[CategoryController::class,'getAll'])->name('admin.category');
+    Route::get('categories/create',[CategoryController::class,'create'])->name('category.create');
+    Route::post('/categories',[CategoryController::class,'store'])->name('category.store');
+    Route::get('categories/{category}/edit',[CategoryController::class,'edit'])->name('category.edit');
+    Route::put('categories/{category}/update',[CategoryController::class,'update'])->name('category.update');
+    Route::get('/categories/{category}/delete',[CategoryController::class,'delete'])->name('category.delete');
+
+});
 require __DIR__.'/auth.php';
