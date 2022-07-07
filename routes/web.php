@@ -1,12 +1,13 @@
 <?php
 
 use App\Http\Controllers\{AdminController,CategoryController,CommentController,PostController,RatingController};
-use App\Models\{Comment,Post};
+use App\Models\{Category, Comment,Post};
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function(){
-$data['posts']=Post::paginate(8);
-return view('welcome',$data);
+$data['posts']=Post::cursorPaginate(4);
+$data['categories']=Category::all();
+return view('home',$data);
 });
 Route::group(['middleware'=>['auth']],function(){
     /* Post's Routes */
