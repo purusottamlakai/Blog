@@ -9,28 +9,19 @@ use Illuminate\Support\Facades\Auth;
 class CommentRepository implements CommentRepositoryInterface
 {
     public function __construct(protected Comment $comment)
-    {
-        
+    {       
     }
     public function storeComment($request,$post)
-    {
-        $validated=$request->validated();
-        $comment=new Comment;
-        $comment->body=$validated['body'];
-        $comment->user_id=Auth::user()->id;
-        $comment->post_id=$post->id;
-        $comment->save();
+    { 
+        $this->comment->create(['body'=>$request['body'],'post_id'=>$post->id,'user_id'=>auth()->id()]);
     }
     public function updateComment($request,$comment)
     {
-        $validated=$request->validated();
-        $comment->body=$validated['body'];
-        $comment->update();
-        return $comment->post;
+        return $comment->update($request);
     } 
     public function deleteComment($id)
     {
-        return Comment::find($id)->delete();
+        return $this->comment->find($id)->delete();
     } 
 
 }

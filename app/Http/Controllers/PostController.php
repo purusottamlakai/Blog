@@ -44,7 +44,8 @@ class PostController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(PostRequest $request)
-    {
+    {   
+        $request=$request->validated();
         $this->postRepository->storePost($request);
         return redirect()->route('dashboard')->with('status',"New Post is created."); 
     }
@@ -83,10 +84,11 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(PostRequest $request,$id)
+    public function update(PostRequest $request,Post $post)
     {
-        $this->postRepository->updatePost($request,$id);
-        return redirect()->route('dashboard')->with('status','Successfully Updated.');
+        $request=$request->validated();
+        $this->postRepository->updatePost($request,$post);
+        return redirect('/dashboard')->with('status','Successfully Updated.');
     }
 
     /**
@@ -95,8 +97,8 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Post $post)
-    {   $post->find($post->id)->delete();
-        return back()->with('status','Post is deleted.');
+    public function destroy($post)
+    {   $this->postRepository->deletePost($post);
+        return redirect('/dashboard')->with('status','Post is deleted.');
     }
 }

@@ -19,10 +19,9 @@ class Admin
     public function handle(Request $request, Closure $next)
     {
         
-        if (Auth::user() &&  Auth::user()->role ==true) {
+        if (auth()->user()->role ==true) {
             return $next($request);
        }
-
-        return back(); 
+       abort(401); 
     }
 }

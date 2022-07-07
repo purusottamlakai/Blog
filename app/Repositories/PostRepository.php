@@ -8,41 +8,34 @@ use Illuminate\Support\Facades\Auth;
 
 class PostRepository implements PostRepositoryInterface
 {
-    public function __construct(protected Post $postModel)
+    public function __construct(protected Post $post)
     {
         
     }
     public function getAllPosts() 
     {
-        return $this->postModel->latest()->cursorPaginate(4);
+        return $this->post->latest()->cursorPaginate(5);
     }
     public function setCount($id)
     {   
-        $post=$this->postModel->where('id', $id)
+        $post=$this->post->where('id', $id)
         ->increment('counts', 1);
     }
     public function storePost($request) 
     {
-        $validated=$request->validated();
-        $post=new Post;
-        $post->title=$validated['title'];
-        $post->body=$validated['body'];
-        $post->category_id=$validated['category_id'];
-        $post->user()->associate(Auth::user());
-        $post->save();
+        $this->post->create(['title'=>$request['title'],'body'=>$request['body'],'category_id'=>$request['category_id'],'user_id' => Auth::id()]);
     }
     public function editPost($id)
     {
-        return Post::find($id);
+        return $this->post->find($id);
 
     }
-    public function updatePost($request,$id)
+    public function updatePost($request,$post)
     {
-        $validated=$request->validated();
-        $post=Post::find($id);
-        $post->title=$validated['title'];
-        $post->body=$validated['body'];
-        $post->category_id=$validated['category_id'];
-        $post->save(); 
+        $post->update($request);
+    }
+    public function deletePost($post)
+    {
+        $this->post->find($post)->delete();
     }
 }

@@ -1,12 +1,7 @@
 <?php
 
-use App\Http\Controllers\AdminController;
-use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\CommentController;
-use App\Http\Controllers\PostController;
-use App\Http\Controllers\RatingController;
-use App\Models\Comment;
-use App\Models\Post;
+use App\Http\Controllers\{AdminController,CategoryController,CommentController,PostController,RatingController};
+use App\Models\{Comment,Post};
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function(){
@@ -38,7 +33,7 @@ Route::group(['middleware'=>['auth']],function(){
 });
 
 /*  Admin Routes*/
-Route::group(['prefix' => 'admin', 'middleware' => ['admin']],function(){
+Route::group(['prefix' => 'admin', 'middleware' => ['auth','admin']],function(){
     Route::get('/dashboard',[AdminController::class,'showDashbord'])->name('admin.dashboard');
     Route::get('/posts',[AdminController::class,'showPosts'])->name('admin.post');
     Route::get('/users/{user}/delete',[AdminController::class,'deleteUser'])->name('user.delete');

@@ -17,6 +17,7 @@ class CommentController extends Controller
     }
     public function store(StoreComment $request,Post $post)
     {
+        $request=$request->validated();
          $this->commentRepository->storeComment($request,$post);
          return redirect()->back()->with('status','New Comment Added.'); 
     }
@@ -27,9 +28,10 @@ class CommentController extends Controller
         return view('comments.edit_comment',$data);
     }
     public function update(UpdateComment $request,$post, Comment $comment)
-    {
-        $data['post']=$this->commentRepository->updateComment($request,$comment);
-        return redirect()->route('post.show',$data)->with('status','Successfully Edited');
+    {   
+        $request=$request->validated();
+        $this->commentRepository->updateComment($request,$comment);
+        return redirect()->route('post.show', [$post])->with('status','Successfully Edited');
     }
     public function delete($post_id,$id)
     {   
