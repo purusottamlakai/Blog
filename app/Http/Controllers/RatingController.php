@@ -17,7 +17,7 @@ class RatingController extends Controller
     public function store(RatingRequest $request,$post_id)
     {
         $validated=$request->validated();
-        $user= Auth::id();
+        $user= auth()->id();
         if(Rating::where('user_id',$user)->where('post_id',$post_id)->exists()){
             $rating=$this->ratingRepository->update($user,$post_id,$validated);
             return back()->with(['status'=>'Your rating is updated.','rating'=>$rating]);

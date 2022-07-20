@@ -13,11 +13,11 @@ class CommentRepository implements CommentRepositoryInterface
     }
     public function storeComment($request,$post)
     { 
-        $this->comment->create(['body'=>$request['body'],'post_id'=>$post->id,'user_id'=>auth()->id()]);
+        $this->comment->create($request->validated()+['post_id'=>$post->id,'user_id'=>auth()->id()]);
     }
     public function updateComment($request,$comment)
     {
-        return $comment->update($request);
+        return $comment->update($request->validated());
     } 
     public function deleteComment($id)
     {

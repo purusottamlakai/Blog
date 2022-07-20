@@ -45,7 +45,6 @@ class PostController extends Controller
      */
     public function store(PostRequest $request)
     {   
-        $request=$request->validated();
         $this->postRepository->storePost($request);
         return redirect()->route('dashboard')->with('status',"New Post is created."); 
     }
@@ -86,7 +85,6 @@ class PostController extends Controller
      */
     public function update(PostRequest $request,Post $post)
     {
-        $request=$request->validated();
         $this->postRepository->updatePost($request,$post);
         return redirect('/dashboard')->with('status','Successfully Updated.');
     }

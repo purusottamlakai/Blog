@@ -23,7 +23,7 @@ class PostRepository implements PostRepositoryInterface
     }
     public function storePost($request) 
     {
-        $this->post->create(['title'=>$request['title'],'body'=>$request['body'],'category_id'=>$request['category_id'],'user_id' => Auth::id()]);
+        $this->post->create($request->validated() + ['user_id' => auth()->id()],);
     }
     public function editPost($id)
     {
@@ -32,7 +32,7 @@ class PostRepository implements PostRepositoryInterface
     }
     public function updatePost($request,$post)
     {
-        $post->update($request);
+        $post->update($request->validated());
     }
     public function deletePost($post)
     {

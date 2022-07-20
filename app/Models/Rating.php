@@ -9,7 +9,7 @@ class Rating extends Model
 {
     use HasFactory;
     protected $fillable=[
-        'stars_rated',
+        'stars_rated','post_id','user_id',
     ];
     public function user()
     {
