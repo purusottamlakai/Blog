@@ -5,9 +5,9 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Comment>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Rating>
  */
-class CommentFactory extends Factory
+class RatingFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -17,9 +17,9 @@ class CommentFactory extends Factory
     public function definition()
     {
         return [
-            'body'=>fake()->paragraph(1),
+            'stars_rated' =>random_int(0,5),
             'post_id'=>random_int(1,11),
-            'user_id'=>random_int(1,20)
+            'user_id' =>'2',
         ];
     }
 }

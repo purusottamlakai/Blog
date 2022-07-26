@@ -55,8 +55,9 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Post $post)
+    public function show($slug)
     {   
+        $post=Post::where('slug',$slug)->first();
         $this->postRepository->setCount($post->id);
         $data['post'] = $post;
         $data['authUser']=Auth::id();
@@ -99,4 +100,5 @@ class PostController extends Controller
     {   $this->postRepository->deletePost($post);
         return redirect('/dashboard')->with('status','Post is deleted.');
     }
+    
 }

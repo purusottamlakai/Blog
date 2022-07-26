@@ -16,7 +16,7 @@
                     </x-nav-link>
                 </div>
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-nav-link :href="route('admin.post')" :active="request()->routeIs('admin.post')">
+                    <x-nav-link :href="route('admin.post.show')" :active="request()->routeIs('admin.post.show')">
                         {{ __('Posts') }}
                     </x-nav-link>
                 </div>

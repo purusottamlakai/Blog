@@ -1,24 +1,26 @@
 <?php
 
-use App\Http\Controllers\{AdminController,CategoryController,CommentController,PostController,RatingController};
-use App\Models\{Category, Comment,Post};
+use App\Http\Controllers\{AdminController,CategoryController,CommentController, HomeController, PostController,RatingController};
+use App\Models\{Category, Comment,Post, User};
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function(){
-$data['posts']=Post::cursorPaginate(4);
-$data['categories']=Category::all();
-return view('home',$data);
-});
+/* Home page's route */
+Route::get('/',[HomeController::class,'index'])->name('home');
+Route::any('/',[HomeController::class,'search'])->name('search');
+Route::get('/{category}/posts',[HomeController::class,'getCategoryPosts'])->name('getCategoryPosts');
+
+
 Route::group(['middleware'=>['auth']],function(){
     /* Post's Routes */
     Route::get('/dashboard',[PostController::class,'index'])->name('dashboard');
     Route::get('/posts/create',[PostController::class,'create'])->name('post.create');
     Route::post('/posts',[PostController::class,'store'])->name('post.store');
-    Route::get('/posts/{post}',[PostController::class,'show'])->name('post.show');
+    Route::get('/posts/{slug}',[PostController::class,'show'])->name('post.show');
     Route::get('/posts/{post}/edit',[PostController::class,'edit'])->name('post.edit');
     Route::put('/posts/{post}',[PostController::class,'update'])->name('post.update');
     Route::get('/posts/{post}/delete',[PostController::class,'destroy'])->name('post.delete');
-   
+    
     /* Rating's Routes */
     Route::get('/posts/{post}/rating',[RatingController::class,'store'])->name('rating.store');
      /* Comment's Routes */
@@ -36,7 +38,7 @@ Route::group(['middleware'=>['auth']],function(){
 /*  Admin Routes*/
 Route::group(['prefix' => 'admin', 'middleware' => ['auth','admin']],function(){
     Route::get('/dashboard',[AdminController::class,'showDashbord'])->name('admin.dashboard');
-    Route::get('/posts',[AdminController::class,'showPosts'])->name('admin.post');
+    Route::get('/posts/all',[AdminController::class,'showPosts'])->name('admin.post.show');
     Route::get('/users/{user}/delete',[AdminController::class,'deleteUser'])->name('user.delete');
     Route::get('/categories',[CategoryController::class,'getAll'])->name('admin.category');
     Route::get('categories/create',[CategoryController::class,'create'])->name('category.create');

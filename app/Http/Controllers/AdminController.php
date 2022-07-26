@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Interfaces\PostRepositoryInterface;
+use App\Models\Post;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -21,7 +22,7 @@ class AdminController extends Controller
     }
     public function showPosts()
     {  
-        $data['posts']=$this->postRepository->getAllPosts();
+        $data['posts']=Post::latest()->paginate(10);
         return view('admin.post',$data);
     }
     public function showCategory(Request $request)

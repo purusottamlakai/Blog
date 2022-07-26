@@ -28,7 +28,7 @@
         <!-- Responsive navbar-->
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <div class="container">
-                <a class="navbar-brand" href="#">BLOG</a>
+                <a class="navbar-brand" href="{{route('home')}}">BLOG</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
@@ -69,7 +69,7 @@
                 <div class="col-lg-8">
                     <!-- Nested row for non-featured blog posts-->
                     <div class="row">
-                        @foreach($posts as $post)
+                        @forelse($posts as $post)
                         <div class="col-lg-6">
                             <!-- Blog post-->
                             <div class="card mb-4">
@@ -81,11 +81,13 @@
                                         Rating:{{round($post->ratings->average('stars_rated'),2) ?? '0'}}
                                     </p>
                                     <p class="card-text"> {{$post->body}}</p>
-                                    <a class="btn btn-primary" href="#!">Read more →</a>
+                                    <a class="btn btn-primary" href="{{route('post.show',['slug'=>$post->slug])}}">Read more →</a>
                                 </div>
                             </div>
                         </div>
-                        @endforeach
+                        @empty
+                        <div class="text-red-600 text-center text-4xl pt-8">No Posts</div>
+                        @endforelse
                     </div>
                     <!-- Pagination-->
                     <nav aria-label="Pagination" class="mb-4">
@@ -95,14 +97,17 @@
                 <!-- Side widgets-->
                 <div class="col-lg-4">
                     <!-- Search widget-->
+                    <form action="{{route('search')}}" method="POST" role="search">
+                        @csrf
                     <div class="card mb-4">
                         <div class="card-header">Search</div>
                         <div class="card-body">
                             <div class="input-group">
-                                <input class="form-control" type="text" placeholder="Enter search term..." aria-label="Enter search term..." aria-describedby="button-search" />
-                                <button class="btn btn-primary" id="button-search" type="button">Go!</button>
+                                <input class="form-control" type="text" name='query' placeholder="Enter search term..." aria-label="Enter search term..." aria-describedby="button-search" />
+                                <button class="btn btn-primary" id="button-search" type="submit">Go!</button>
                             </div>
                         </div>
+                    </form>
                     </div>
                     <!-- Categories widget-->
                     <div class="card mb-4">
@@ -113,7 +118,7 @@
                                 <div class="col-sm-6">
                                     <ul class="list-unstyled mb-0">
                                         @foreach($categories as $category)
-                                        <li><a href="#!">{{$category->name}}</a></li>     
+                                        <li><a href="{{route('getCategoryPosts',['category'=>$category->id])}}">{{$category->name}}</a></li>     
                                         @endforeach                                
                                     </ul>
                                 </div>

@@ -33,6 +33,7 @@ class CategoryController extends Controller
         $data['categories']=$this->category->all();
         return view('admin.category',$data);
     }
+    
     public function create()
     {   
         $data['categories']=$this->category->all();

@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Interfaces\PostRepositoryInterface;
 use App\Models\Post;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 
 class PostRepository implements PostRepositoryInterface
@@ -23,7 +24,9 @@ class PostRepository implements PostRepositoryInterface
     }
     public function storePost($request) 
     {
-        $this->post->create($request->validated() + ['user_id' => auth()->id()],);
+        $data=$request->validated();
+        $slug=Str::slug($request->title.'-'.now()->format('Ymd'));
+        $this->post->create($data + ['slug'=>$slug,'user_id' => auth()->id()]);
     }
     public function editPost($id)
     {
@@ -31,8 +34,11 @@ class PostRepository implements PostRepositoryInterface
 
     }
     public function updatePost($request,$post)
-    {
-        $post->update($request->validated());
+    {   
+        $data=$request->validated();
+        $slug=Str::slug($request->title.'-'.now()->format('Ymd'));
+        $post->update($data + ['slug'=>$slug]);
+   
     }
     public function deletePost($post)
     {
